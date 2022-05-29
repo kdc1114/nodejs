@@ -1,0 +1,56 @@
+DROP DATABASE SHOP;
+CREATE DATABASE SHOP;
+use SHOP;
+create table member(
+ID varchar(255) NOT NULL,
+NAME varchar(255) NOT NULL,
+PHONE varchar(255) NOT NULL,
+BIRTH INT default 1970,
+CONSTRAINT ID_PK PRIMARY KEY(ID),
+CONSTRAINT PHONE_UC UNIQUE(PHONE)
+);
+
+
+{"msg":"오류:ER_ROW_IS_REFERENCED_2: Cannot delete or update 
+a parent row: a foreign key constraint fails (`shop`.`board`, CONSTRAINT `board_ibfk_1` FOREIGN KEY (`MEMBER_ID`)
+ REFERENCES `member` (`id`) ON UPDATE CASCADE)"}
+
+INSERT INTO MEMBER 
+(ID,NAME,PHONE)
+VALUES
+('AAA','길동',666)
+,('BBB','길동',666)
+,('CCC','길동',888);
+CREATE TABLE BOARD(
+	NUM INT NOT NULL AUTO_INCREMENT,
+	MEMBER_ID VARCHAR(255) NOT NULL,
+	TITLE VARCHAR(255) NOT NULL,
+	CONTENTS VARCHAR(255) DEFAULT '',
+	REGIST_TIME DATETIME DEFAULT CURRENT_TIMESTAMP(),
+	PRIMARY KEY(NUM),
+	FOREIGN KEY(MEMBER_ID) REFERENCES MEMBER(ID) 
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
+) ;
+INSERT INTO BOARD
+(MEMBER_ID,TITLE,CONTENTS)
+VALUES 
+( 'BBB','2번번째글이다 와~!','반갑습니다. 여러분~~!!')
+,( 'BBB','3번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','4번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','5번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','6번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','7번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','8번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','9번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','10번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','11번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','12번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','13번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','14번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','15번번째글이다 와~!','반갑습니다. 여러분~~!!')
+ ,( 'BBB','16번번째글이다 와~!','반갑습니다. 여러분~~!!');
+
+
+
+

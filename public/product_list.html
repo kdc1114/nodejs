@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax로 list를 출력하자</title>
+<style>
+.product_list_container{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+@media (max-width: 1200px) {
+    .product_list_container{
+        grid-template-columns: auto auto auto ;
+    }
+}
+@media (max-width: 1000px) {
+    .product_list_container{
+        grid-template-columns: auto auto ;
+    }
+}
+@media (max-width: 800px) {
+    .product_list_container{
+        grid-template-columns: auto ;
+    }
+}
+.product_list_container>li{
+    border: 1px solid;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px;
+    margin: 20px;
+}
+.item_clone{ display: none !important;}
+.product_list_container>li .MAIN_IMG{
+    height: 200px;
+}
+</style>
+</head>
+<body>
+    <h1>ajax로 product_list.json을 출력하자</h1>
+    <p>
+        <button id="productListBtn">
+            상품 리스트 출력
+        </button>
+    </p>
+    <ul class="product_list_container" id="productList">
+<!--    PRODUCT_NUM: 3,
+NAME: '컨버스',
+TITLE: '컨버스 척 70 클래식',
+COUNT: 100,
+PRICE: 58800,
+COLOR: '엘로우',
+MAIN_IMG: '162058C.jpg',
+DETAIL_IMG: '162058C_detail.jpg',
+MODEL_NUM: '162058C',
+MEMBER_ID: 'BBB',
+CATEGORY_NUM: 19 join=>CATEGORY : '신발'  -->
+        <li class="item_clone">
+            <img class="MAIN_IMG">
+            <ul class="product">
+                <li>상세보기 : <a class="PRODUCT_NUM" href="/item/detail.do?id=">이동</a></li>
+                <li>이름 : <span class="NAME">컨버스</span> </li>
+                <li>타이틀 : <span class="TITLE">컨버스 척 70 클래식</span> </li>
+                <li>등록수 : <span class="COUNT">100</span>개 </li>
+                <li>가격 : <span class="PRICE">58800</span>운 </li>
+                <li>색 : <span class="COLOR">엘로우</span> </li>
+                <li>모델번호 : <span class="MODEL_NUM">162058C</span> </li>
+                <li>글쓴이 : <span class="MEMBER_ID">'BBB'</span> </li>
+                <li>카테고리 : <span class="CATEGORY"> '신발'</span></li>
+            </ul>
+        </li>
+    </ul>
+<script>
+// PRODUCT_LIST 문서 로드시 추가된 객체
+
+const productListBtn = document.getElementById("productListBtn"); // 아이템 리스트 출력버튼
+const productList = document.getElementById("productList"); // 아이템 리스트 컨테이너
+const item_clone = productList.querySelector(".item_clone"); // 복제해서 리스트 출력
+
+productListBtn.addEventListener("click",productListPrint);
+
+function productListPrint(){
+    PRODUCT_LIST.forEach((item)=>{
+        const item_node = item_clone.cloneNode(true);
+        item_node.className="";
+        //PRODUCT_NUM일때만 href 세팅
+        for(let key in item){
+            if(key==="PRODUCT_NUM"){
+                let href=item_node.querySelector(".PRODUCT_NUM").href;
+                item_node.querySelector(".PRODUCT_NUM").href=href+item["PRODUCT_NUM"];
+            }else if(key==="MAIN_IMG"){
+                item_node.querySelector(`.${key}`).src="/public/img/"+item[key];
+            }else{
+                const node=item_node.querySelector("."+key);
+                if(node) node.innerText=item[key];
+            }
+            productList.append(item_node);
+        }
+    })
+}
+</script>
+</body>
+</html>
